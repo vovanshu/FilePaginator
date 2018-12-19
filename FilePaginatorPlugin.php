@@ -17,6 +17,7 @@ class FilePaginatorPlugin extends Omeka_Plugin_AbstractPlugin
     public function hookPublicHead($args)
     {   
         queue_js_file('jquery.simplePagination');
+        queue_js_file('filePagination');
         queue_css_file('simplePagination');
         
     }
