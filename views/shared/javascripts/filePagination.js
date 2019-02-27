@@ -18,6 +18,7 @@ jQuery(function($) {
 
             items.hide()
             .slice(showFrom, showTo).show();
+            return false;
         }
     });
 });
