@@ -25,20 +25,24 @@ class FilePaginatorPlugin extends Omeka_Plugin_AbstractPlugin
 
     public function hookPublicHead($args)
     {   
+        $theme = get_option('file_paginator_theme');
+        queue_js_string('var theme = "' . $theme . '"');
         queue_js_file('jquery.simplePagination');
         queue_js_file('filePagination');
         queue_css_file('simplePagination');
         
     }
 
+    public function hookConfigForm($args) {
+        $view = $args['view'];
+        include('config_form.php');
+    }
+
     public function hookConfig($args){
         $post = $args['post'];
         set_option('file_paginator_theme',$post['theme']);
-        set_option('file_paginator_links'),$post['links'];
-    }
-
-    public function hookConfigForm() {
-        include('config_form.php');
+        set_option('file_paginator_links',$post['links']);
+        set_option('file_paginator_metadata',$post['metadata']);
     }
 
     public function filterFilesForItem($html) {
@@ -53,7 +57,8 @@ class FilePaginatorPlugin extends Omeka_Plugin_AbstractPlugin
         }
         return '<div class="single-file">'
             . $html
-            . all_element_texts($file, array('show_element_set_headings' => false))
+            . (get_option('file_paginator_metadata') == '1' ? all_element_texts($file, array('show_element_set_headings' => false)) : '')
+            // . all_element_texts($file, array('show_element_set_headings' => false))
             . '</div>';
     }
 

@@ -10,7 +10,7 @@ jQuery(function($) {
     $("#pagination").pagination({
         items: numItems,
         itemsOnPage: perPage,
-        cssStyle: "light-theme",
+        cssStyle: theme,
 
         onPageClick: function(pageNumber) {
             var showFrom = perPage * (pageNumber - 1);
@@ -18,7 +18,15 @@ jQuery(function($) {
 
             items.hide()
             .slice(showFrom, showTo).show();
-            return false;
         }
     });
+    function checkFragment() {
+        var hash = window.location.hash || "#page-1";
+        hash = hash.match(/^#page-(\d+)$/);
+        if(hash) {
+            $("#pagination").pagination("selectPage", parseInt(hash[1]));
+        }
+    };
+    $(window).bind("popstate", checkFragment);
+    checkFragment();
 });
