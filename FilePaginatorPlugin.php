@@ -20,7 +20,8 @@ class FilePaginatorPlugin extends Omeka_Plugin_AbstractPlugin
 
     protected $_filters = array(
         'files_for_item',
-        'file_markup'
+        'file_markup',
+        'file_markup_options'
     );
 
     public function hookPublicHead($args)
@@ -49,6 +50,13 @@ class FilePaginatorPlugin extends Omeka_Plugin_AbstractPlugin
         return '<div id="pagination"></div>'.$html;
     }
 
+    public function filterFileMarkupOptions ($options) {
+        if (get_option('file_paginator_links') == 1) {
+            $options['linkAttributes']['target'] = '_blank';
+        }
+        return $options;
+    }
+
     public function filterFileMarkup($html,$args) {
         $file = $args['file'];
         $options =  $args['options'];
@@ -58,21 +66,7 @@ class FilePaginatorPlugin extends Omeka_Plugin_AbstractPlugin
         return '<div class="single-file">'
             . $html
             . (get_option('file_paginator_metadata') == '1' ? all_element_texts($file, array('show_element_set_headings' => false)) : '')
-            // . all_element_texts($file, array('show_element_set_headings' => false))
             . '</div>';
-    }
-
-    public static function paginateFiles() {
-        echo '<div id="pagination"></div>';
-        $item = get_current_record('item');
-        set_loop_records('files', $item->Files);
-        foreach (loop('files') as $file):
-            echo '<div class="single-file">';
-            echo file_markup($file);
-            echo all_element_texts($file, array('show_element_set_headings' => false));
-            echo '</div>';
-        endforeach;
-
     }
 }
 ?>
