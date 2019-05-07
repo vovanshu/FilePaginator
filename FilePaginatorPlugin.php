@@ -26,8 +26,6 @@ class FilePaginatorPlugin extends Omeka_Plugin_AbstractPlugin
 
     public function hookPublicHead($args)
     {   
-        $theme = get_option('file_paginator_theme');
-        queue_js_string('var theme = "' . $theme . '"');
         queue_js_file('jquery.simplePagination');
         queue_js_file('filePagination');
         queue_css_file('simplePagination');
@@ -47,7 +45,8 @@ class FilePaginatorPlugin extends Omeka_Plugin_AbstractPlugin
     }
 
     public function filterFilesForItem($html) {
-        return '<div id="pagination"></div>'.$html;
+        $theme = get_option('file_paginator_theme');
+        return '<div id="pagination" data-theme="' . $theme . '"></div>'.$html;
     }
 
     public function filterFileMarkupOptions ($options) {

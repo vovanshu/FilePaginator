@@ -4,6 +4,7 @@ jQuery(function($) {
 
     var numItems = items.length;
     var perPage = 1;
+    var theme = $("#pagination").data("theme");
 
     items.slice(perPage).hide();
 
