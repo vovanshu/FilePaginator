@@ -46,7 +46,7 @@ class FilePaginatorPlugin extends Omeka_Plugin_AbstractPlugin
 
     public function filterFilesForItem($html) {
         $theme = get_option('file_paginator_theme');
-        return '<div id="pagination" data-theme="' . $theme . '"></div>'.$html;
+        return '<div id="file-pagination" data-theme="' . $theme . '"></div>'.$html;
     }
 
     public function filterFileMarkupOptions ($options) {
