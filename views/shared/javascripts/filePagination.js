@@ -6,11 +6,11 @@ jQuery(function($) {
 
     var numItems = items.length;
     var perPage = 1;
-    var theme = $(pagination).data("theme");
+    var theme = pagination.data("theme");
 
     items.slice(perPage).hide();
 
-    $(pagination).pagination({
+    pagination.pagination({
         items: numItems,
         itemsOnPage: perPage,
         cssStyle: theme,
@@ -27,7 +27,7 @@ jQuery(function($) {
         var hash = window.location.hash || "#page-1";
         hash = hash.match(/^#page-(\d+)$/);
         if(hash) {
-            $(pagination).pagination("selectPage", parseInt(hash[1]));
+            pagination.pagination("selectPage", parseInt(hash[1]));
         }
     };
     $(window).bind("popstate", checkFragment);
